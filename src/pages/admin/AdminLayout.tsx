@@ -25,37 +25,40 @@ export function AdminLayout() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="bg-card border-b border-border px-6 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-6">
+      <header className="bg-card border-b border-border">
+        {/* 上段: アプリ名 + ユーザー情報 */}
+        <div className="px-4 py-2 flex items-center justify-between">
           <button
             onClick={() => navigate('/admin/courses')}
-            className="text-base font-bold text-primary hover:opacity-75 transition-opacity"
+            className="text-base font-bold text-primary hover:opacity-75 transition-opacity whitespace-nowrap"
           >
             {t('appName')}
           </button>
-          <nav className="flex gap-1">
-            {navItems.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                className={({ isActive }) =>
-                  `px-3 py-1.5 rounded-input text-sm font-semibold transition-colors ${isActive ? 'bg-primary text-white' : 'text-gray-600 hover:bg-gray-100'}`
-                }
-              >
-                {item.label}
-              </NavLink>
-            ))}
-          </nav>
+          <div className="flex items-center gap-2">
+            <LanguageSelector />
+            <span className="text-sm text-gray-500 whitespace-nowrap hidden sm:inline">{admin?.name}</span>
+            <button onClick={handleLogout} className="text-sm text-gray-500 hover:text-danger transition-colors whitespace-nowrap">
+              {t('logout')}
+            </button>
+          </div>
         </div>
-        <div className="flex items-center gap-3">
-          <LanguageSelector />
-          <span className="text-sm text-gray-500">{admin?.name}</span>
-          <button onClick={handleLogout} className="text-sm text-gray-500 hover:text-danger transition-colors">
-            {t('logout')}
-          </button>
+        {/* 下段: ナビゲーション */}
+        <div className="px-4 pb-2 flex items-center gap-1 overflow-x-auto">
+          {navItems.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className={({ isActive }) =>
+                `px-3 py-1.5 rounded-input text-sm font-semibold transition-colors whitespace-nowrap ${isActive ? 'bg-primary text-white' : 'text-gray-600 hover:bg-gray-100'}`
+              }
+            >
+              {item.label}
+            </NavLink>
+          ))}
+          <span className="text-sm text-gray-500 ml-auto pl-2 whitespace-nowrap sm:hidden">{admin?.name}</span>
         </div>
       </header>
-      <main className="p-6">
+      <main className="p-4 sm:p-6">
         <Outlet />
       </main>
     </div>

@@ -101,22 +101,22 @@ export function CoursesPage() {
       ) : (
         <div className="grid gap-4">
           {courses.map((course) => (
-            <Card key={course.id} className="flex items-center justify-between">
-              <div className="flex flex-col gap-1">
-                <div className="flex items-center gap-2">
+            <Card key={course.id} className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-col gap-1 min-w-0">
+                <div className="flex flex-wrap items-center gap-2">
                   <span className="font-semibold text-gray-800">{course.title}</span>
                   <Badge label={course.category} color={CATEGORY_COLORS[course.category] ?? 'gray'} />
                   {(course as unknown as Record<string, boolean>).has_image && <Badge label={t('adminLabelImage')} color="blue" />}
                   {(course as unknown as Record<string, boolean>).has_video && <Badge label={t('adminLabelVideo')} color="yellow" />}
                 </div>
-                <div className="text-xs text-gray-500 flex gap-3">
+                <div className="text-xs text-gray-500 flex flex-wrap gap-3">
                   <span>{t('adminSectionCount', { count: course.section_count })}</span>
                   <span>{t('adminQuestionCount', { count: course.question_count })}</span>
                   <span>{t('adminPassScoreCount', { score: course.pass_score })}</span>
                 </div>
                 {course.description && <p className="text-xs text-gray-400 mt-1">{course.description}</p>}
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 shrink-0">
                 <Button variant="secondary" size="sm" onClick={() => navigate(`/admin/courses/${course.id}/edit`)}>{t('adminEdit')}</Button>
                 <Button variant="danger" size="sm" onClick={() => handleDelete(course.id)}>{t('adminDelete')}</Button>
               </div>

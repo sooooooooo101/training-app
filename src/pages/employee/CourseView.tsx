@@ -66,19 +66,19 @@ export function CourseView() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="bg-card border-b border-border px-6 py-3 flex items-center justify-between">
-        <button onClick={() => navigate('/employee')} className="text-primary text-sm font-semibold hover:underline">
+      <header className="bg-card border-b border-border px-4 py-2 flex items-center justify-between gap-2">
+        <button onClick={() => navigate('/employee')} className="text-primary text-sm font-semibold hover:underline whitespace-nowrap shrink-0">
           {t('backToList')}
         </button>
-        <h1 className="text-base font-bold text-gray-800">{course.title}</h1>
-        <span className="text-xs text-gray-400">{currentIndex + 1} / {sections.length}</span>
+        <h1 className="text-sm font-bold text-gray-800 truncate text-center">{course.title}</h1>
+        <span className="text-xs text-gray-400 whitespace-nowrap shrink-0">{currentIndex + 1} / {sections.length}</span>
       </header>
 
-      <div className="px-6 py-2">
+      <div className="px-4 py-2">
         <ProgressBar value={progress} />
       </div>
 
-      <main className="p-6 max-w-2xl mx-auto">
+      <main className="p-4 sm:p-6 max-w-2xl mx-auto">
         {section ? (
           <div>
             {section.title && <h2 className="text-xl font-bold text-gray-800 mb-4">{section.title}</h2>}

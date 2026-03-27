@@ -77,16 +77,16 @@ export function EmployeeHome() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="bg-card border-b border-border px-6 py-3 flex items-center justify-between">
-        <h1 className="text-base font-bold text-primary">{t('appName')}</h1>
-        <div className="flex items-center gap-3">
+      <header className="bg-card border-b border-border px-4 py-2 flex items-center justify-between">
+        <h1 className="text-base font-bold text-primary whitespace-nowrap">{t('appName')}</h1>
+        <div className="flex items-center gap-2 min-w-0">
           <LanguageSelector />
-          <span className="text-sm text-gray-500">{employee?.name}</span>
-          <Button variant="ghost" size="sm" onClick={handleLogout}>{t('logout')}</Button>
+          <span className="text-sm text-gray-500 whitespace-nowrap truncate max-w-[6rem]">{employee?.name}</span>
+          <Button variant="ghost" size="sm" onClick={handleLogout} className="whitespace-nowrap">{t('logout')}</Button>
         </div>
       </header>
 
-      <main className="p-6 max-w-2xl mx-auto">
+      <main className="p-4 sm:p-6 max-w-2xl mx-auto">
         <h2 className="text-xl font-bold text-gray-800 mb-6">{t('courseList')}</h2>
 
         {loading ? (

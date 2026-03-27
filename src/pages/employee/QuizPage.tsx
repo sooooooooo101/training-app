@@ -87,15 +87,15 @@ export function QuizPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="bg-card border-b border-border px-6 py-3 flex items-center justify-between">
-        <button onClick={() => navigate(-1)} className="text-primary text-sm font-semibold hover:underline">
+      <header className="bg-card border-b border-border px-4 py-2 flex items-center justify-between gap-2">
+        <button onClick={() => navigate(-1)} className="text-primary text-sm font-semibold hover:underline whitespace-nowrap shrink-0">
           {t('backToTraining')}
         </button>
-        <h1 className="text-base font-bold text-gray-800">{t('quizTitle')}</h1>
-        <span className="text-xs text-gray-400">{Object.keys(answers).length} / {questions.length}</span>
+        <h1 className="text-sm font-bold text-gray-800 truncate text-center">{t('quizTitle')}</h1>
+        <span className="text-xs text-gray-400 whitespace-nowrap shrink-0">{Object.keys(answers).length} / {questions.length}</span>
       </header>
 
-      <main className="p-6 max-w-2xl mx-auto">
+      <main className="p-4 sm:p-6 max-w-2xl mx-auto">
         <div className="flex flex-col gap-6">
           {questions.map((q, qi) => (
             <div key={q.id} className="bg-card border border-border rounded-card p-4">

@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { LanguageSelector } from '../components/ui/LanguageSelector'
+import { useLpT } from '../lib/lpI18n'
 
 type View = 'home' | 'course' | 'quiz' | 'result'
 
@@ -9,8 +11,7 @@ const DEMO_COURSES = [
     title: 'Restaurant hygiene basics',
     description: 'Essential food safety and hygiene practices for all restaurant staff.',
     emoji: '🧼',
-    content: `
-**Why hygiene matters**
+    content: `**Why hygiene matters**
 
 Food safety is the foundation of every restaurant. Poor hygiene can cause foodborne illness, health code violations, and permanent damage to your reputation.
 
@@ -24,8 +25,7 @@ Food safety is the foundation of every restaurant. Poor hygiene can cause foodbo
 
 4. **Surface sanitization** — Clean and sanitize all food-contact surfaces every 4 hours during service, and immediately after contact with raw meat.
 
-5. **Personal hygiene** — Keep fingernails short and clean. Do not wear jewelry while handling food. Stay home when sick.
-    `,
+5. **Personal hygiene** — Keep fingernails short and clean. Do not wear jewelry while handling food. Stay home when sick.`,
     quiz: [
       {
         id: 'q1',
@@ -67,8 +67,7 @@ Food safety is the foundation of every restaurant. Poor hygiene can cause foodbo
     title: 'Customer service 101',
     description: 'How to deliver exceptional guest experiences every time.',
     emoji: '😊',
-    content: `
-**The guest experience starts with you**
+    content: `**The guest experience starts with you**
 
 Every interaction with a guest shapes how they feel about your restaurant. Great service turns first-time visitors into loyal regulars.
 
@@ -86,8 +85,7 @@ Every interaction with a guest shapes how they feel about your restaurant. Great
    - **A**pologize sincerely
    - **T**ake action immediately
 
-5. **The farewell matters** — Thank guests by name if you know it. Invite them to return. A warm goodbye is as important as the welcome.
-    `,
+5. **The farewell matters** — Thank guests by name if you know it. Invite them to return. A warm goodbye is as important as the welcome.`,
     quiz: [
       {
         id: 'q1',
@@ -105,7 +103,7 @@ Every interaction with a guest shapes how they feel about your restaurant. Great
         body: 'What should you do if a guest asks about a dish you are unsure about?',
         choices: [
           { id: 'a', body: 'Make your best guess' },
-          { id: 'b', body: 'Tell them it\'s delicious' },
+          { id: 'b', body: "Tell them it's delicious" },
           { id: 'c', body: 'Find out the correct information' },
           { id: 'd', body: 'Recommend a different dish' },
         ],
@@ -128,6 +126,7 @@ Every interaction with a guest shapes how they feel about your restaurant. Great
 
 export function DemoPage() {
   const navigate = useNavigate()
+  const t = useLpT()
   const [view, setView] = useState<View>('home')
   const [activeCourseId, setActiveCourseId] = useState<string | null>(null)
   const [answers, setAnswers] = useState<Record<string, string>>({})
@@ -166,26 +165,29 @@ export function DemoPage() {
   if (view === 'home') {
     return (
       <div className="min-h-screen bg-background">
-        <header className="bg-white border-b border-border px-4 py-3 flex items-center justify-between">
-          <button onClick={() => navigate('/')} className="text-primary font-semibold text-sm hover:underline">
-            ← Back to home
+        <header className="bg-white border-b border-border px-4 py-3 flex items-center justify-between gap-3">
+          <button onClick={() => navigate('/')} className="text-primary font-semibold text-sm hover:underline shrink-0">
+            {t('demoBackHome')}
           </button>
-          <span className="font-bold text-gray-800 text-sm">Demo — Sakura Restaurant</span>
-          <button
-            onClick={() => navigate('/app')}
-            className="bg-primary text-white text-xs font-semibold px-3 py-1.5 rounded-input hover:bg-primary-dark transition-colors"
-          >
-            Start Free
-          </button>
+          <span className="font-bold text-gray-800 text-sm truncate">Demo — {t('demoTenantName')}</span>
+          <div className="flex items-center gap-2 shrink-0">
+            <LanguageSelector />
+            <button
+              onClick={() => navigate('/app')}
+              className="bg-primary text-white text-xs font-semibold px-3 py-1.5 rounded-input hover:bg-primary-dark transition-colors whitespace-nowrap"
+            >
+              {t('startFree')}
+            </button>
+          </div>
         </header>
 
         <div className="max-w-lg mx-auto px-4 py-8">
           <div className="bg-primary-light border border-primary/20 rounded-card px-4 py-3 mb-6 text-sm text-primary-dark font-medium">
-            👋 This is a demo. No login needed — explore freely!
+            {t('demoBanner')}
           </div>
 
-          <h1 className="text-xl font-bold text-gray-900 mb-1">My Training</h1>
-          <p className="text-sm text-gray-500 mb-6">Hello, Demo Staff 👋</p>
+          <h1 className="text-xl font-bold text-gray-900 mb-1">{t('demoMyTraining')}</h1>
+          <p className="text-sm text-gray-500 mb-6">{t('demoHello')}</p>
 
           <div className="flex flex-col gap-4">
             {DEMO_COURSES.map((c) => (
@@ -198,7 +200,7 @@ export function DemoPage() {
                     onClick={() => handleStartCourse(c.id)}
                     className="bg-primary text-white text-xs font-semibold px-4 py-1.5 rounded-input hover:bg-primary-dark transition-colors"
                   >
-                    Start training →
+                    {t('demoStart')}
                   </button>
                 </div>
               </div>
@@ -206,12 +208,12 @@ export function DemoPage() {
           </div>
 
           <div className="mt-10 text-center">
-            <p className="text-sm text-gray-500 mb-3">Ready to use this for your restaurant?</p>
+            <p className="text-sm text-gray-500 mb-3">{t('demoCtaSub')}</p>
             <button
               onClick={() => navigate('/app')}
               className="bg-primary text-white text-sm font-semibold px-6 py-2.5 rounded-input hover:bg-primary-dark transition-colors"
             >
-              Start Free — no credit card needed
+              {t('startFree')}
             </button>
           </div>
         </div>
@@ -225,29 +227,22 @@ export function DemoPage() {
       <div className="min-h-screen bg-background">
         <header className="bg-white border-b border-border px-4 py-3 flex items-center gap-3">
           <button onClick={handleBack} className="text-primary font-semibold text-sm hover:underline shrink-0">
-            ← Back
+            {t('demoBack')}
           </button>
-          <h1 className="font-bold text-gray-800 text-sm truncate">{course.title}</h1>
+          <h1 className="font-bold text-gray-800 text-sm truncate flex-1">{course.title}</h1>
+          <LanguageSelector />
         </header>
 
         <div className="max-w-2xl mx-auto px-4 py-6">
           <div className="bg-white border border-border rounded-card p-6 mb-6">
             <div className="text-4xl mb-3">{course.emoji}</div>
             <h2 className="text-xl font-bold text-gray-900 mb-4">{course.title}</h2>
-            <div className="prose prose-sm text-gray-700 text-sm leading-relaxed whitespace-pre-line">
+            <div className="text-sm text-gray-700 leading-relaxed">
               {course.content.trim().split('\n').map((line, i) => {
-                if (line.startsWith('**') && line.endsWith('**')) {
+                if (line === '') return <div key={i} className="h-2" />
+                if (/^\*\*.+\*\*$/.test(line)) {
                   return <p key={i} className="font-bold text-gray-900 mt-4 mb-1">{line.replace(/\*\*/g, '')}</p>
                 }
-                if (line.match(/^\d+\.\s\*\*/)) {
-                  const [, num, rest] = line.match(/^(\d+\.\s)\*\*(.+?)\*\*(.*)/) ?? []
-                  return (
-                    <p key={i} className="mb-1">
-                      {num}<strong>{rest}</strong>{line.replace(/^\d+\.\s\*\*.+?\*\*/, '')}
-                    </p>
-                  )
-                }
-                if (line.trim() === '') return <div key={i} className="h-2" />
                 return <p key={i} className="mb-1">{line}</p>
               })}
             </div>
@@ -258,7 +253,7 @@ export function DemoPage() {
               onClick={handleStartQuiz}
               className="bg-primary text-white text-base font-semibold px-8 py-3 rounded-input hover:bg-primary-dark transition-colors"
             >
-              Take quiz ({course.quiz.length} questions)
+              {t('demoTakeQuiz', { n: course.quiz.length })}
             </button>
           </div>
         </div>
@@ -273,10 +268,12 @@ export function DemoPage() {
       <div className="min-h-screen bg-background">
         <header className="bg-white border-b border-border px-4 py-2 flex items-center justify-between gap-2">
           <button onClick={handleBack} className="text-primary text-sm font-semibold hover:underline shrink-0">
-            ← Back
+            {t('demoBack')}
           </button>
           <h1 className="text-sm font-bold text-gray-800 truncate">Quiz</h1>
-          <span className="text-xs text-gray-400 shrink-0">{answered} / {course.quiz.length}</span>
+          <span className="text-xs text-gray-400 shrink-0">
+            {t('demoAnswered', { answered, total: course.quiz.length })}
+          </span>
         </header>
 
         <div className="max-w-2xl mx-auto px-4 py-6 flex flex-col gap-6">
@@ -307,7 +304,7 @@ export function DemoPage() {
               disabled={answered < course.quiz.length}
               className="bg-primary text-white text-base font-semibold px-8 py-3 rounded-input hover:bg-primary-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              Submit answers
+              {t('demoSubmit')}
             </button>
           </div>
         </div>
@@ -323,31 +320,36 @@ export function DemoPage() {
 
     return (
       <div className="min-h-screen bg-background flex flex-col">
-        <header className="bg-white border-b border-border px-4 py-3 flex items-center gap-3">
+        <header className="bg-white border-b border-border px-4 py-3 flex items-center justify-between">
           <button onClick={() => setView('home')} className="text-primary font-semibold text-sm hover:underline">
-            ← Back to courses
+            {t('demoBackCourses')}
           </button>
+          <LanguageSelector />
         </header>
 
         <div className="flex-1 flex items-center justify-center px-4 py-10">
           <div className="bg-white border border-border rounded-card p-8 max-w-sm w-full text-center">
             <div className="text-6xl mb-4">{passed ? '🎉' : '📚'}</div>
-            <h2 className="text-xl font-bold text-gray-900 mb-1">{passed ? 'Well done!' : 'Keep practicing!'}</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-1">
+              {passed ? t('demoWellDone') : t('demoKeepPracticing')}
+            </h2>
             <p className="text-4xl font-bold text-primary my-4">{pct}%</p>
-            <p className="text-sm text-gray-500 mb-6">{score} / {total} correct</p>
+            <p className="text-sm text-gray-500 mb-6">
+              {t('demoCorrect', { score, total })}
+            </p>
 
             <div className="flex flex-col gap-3">
               <button
                 onClick={() => setView('home')}
                 className="bg-primary text-white text-sm font-semibold py-2.5 rounded-input hover:bg-primary-dark transition-colors w-full"
               >
-                Back to courses
+                {t('demoBackCourses')}
               </button>
               <button
                 onClick={() => navigate('/app')}
                 className="bg-primary-light text-primary text-sm font-semibold py-2.5 rounded-input hover:bg-green-100 transition-colors w-full"
               >
-                Use this for my restaurant →
+                {t('demoCta')}
               </button>
             </div>
           </div>

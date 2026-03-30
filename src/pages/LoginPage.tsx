@@ -256,6 +256,12 @@ export function LoginPage() {
             </>
           )}
         </div>
+
+        <p className="text-center text-xs text-gray-400 mt-6">
+          <a href="/terms" className="underline hover:text-gray-600">利用規約</a>
+          　・
+          <a href="/privacy" className="underline hover:text-gray-600">プライバシーポリシー</a>
+        </p>
       </div>
     </div>
   )

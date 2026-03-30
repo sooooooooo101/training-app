@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { Toast } from './components/ui/Toast'
 import { useAuthStore } from './stores/authStore'
 import { LoginPage } from './pages/LoginPage'
+import { TermsPage } from './pages/TermsPage'
+import { PrivacyPage } from './pages/PrivacyPage'
 import { AdminLayout } from './pages/admin/AdminLayout'
 import { CoursesPage } from './pages/admin/CoursesPage'
 import { CourseEditPage } from './pages/admin/CourseEditPage'
@@ -28,6 +30,8 @@ export default function App() {
       <Toast />
       <Routes>
         <Route path="/" element={<LoginPage />} />
+        <Route path="/terms" element={<TermsPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
         <Route
           path="/admin"
           element={

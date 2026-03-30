@@ -1,132 +1,16 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { LanguageSelector } from '../components/ui/LanguageSelector'
-import { useLpT } from '../lib/lpI18n'
+import { useLpT, getDemoCourses } from '../lib/lpI18n'
+import { useLanguageStore } from '../stores/languageStore'
 
 type View = 'home' | 'course' | 'quiz' | 'result'
-
-const DEMO_COURSES = [
-  {
-    id: 'hygiene',
-    title: 'Restaurant hygiene basics',
-    description: 'Essential food safety and hygiene practices for all restaurant staff.',
-    emoji: '🧼',
-    content: `**Why hygiene matters**
-
-Food safety is the foundation of every restaurant. Poor hygiene can cause foodborne illness, health code violations, and permanent damage to your reputation.
-
-**Key practices**
-
-1. **Handwashing** — Wash hands for at least 20 seconds before handling food, after touching raw meat, and after using the restroom.
-
-2. **Temperature control** — Keep hot foods above 60°C and cold foods below 5°C. Never leave food in the "danger zone" (5–60°C) for more than 2 hours.
-
-3. **Cross-contamination prevention** — Use separate cutting boards and utensils for raw meat, vegetables, and ready-to-eat foods. Always store raw meat below ready-to-eat foods in the refrigerator.
-
-4. **Surface sanitization** — Clean and sanitize all food-contact surfaces every 4 hours during service, and immediately after contact with raw meat.
-
-5. **Personal hygiene** — Keep fingernails short and clean. Do not wear jewelry while handling food. Stay home when sick.`,
-    quiz: [
-      {
-        id: 'q1',
-        body: 'How long should you wash your hands before handling food?',
-        choices: [
-          { id: 'a', body: '5 seconds' },
-          { id: 'b', body: '10 seconds' },
-          { id: 'c', body: '20 seconds' },
-          { id: 'd', body: '60 seconds' },
-        ],
-        correct: 'c',
-      },
-      {
-        id: 'q2',
-        body: 'What is the "danger zone" temperature range for food?',
-        choices: [
-          { id: 'a', body: '0°C – 10°C' },
-          { id: 'b', body: '5°C – 60°C' },
-          { id: 'c', body: '10°C – 70°C' },
-          { id: 'd', body: '20°C – 80°C' },
-        ],
-        correct: 'b',
-      },
-      {
-        id: 'q3',
-        body: 'Where should raw meat be stored in the refrigerator?',
-        choices: [
-          { id: 'a', body: 'On the top shelf' },
-          { id: 'b', body: 'Next to vegetables' },
-          { id: 'c', body: 'Below ready-to-eat foods' },
-          { id: 'd', body: 'It does not matter' },
-        ],
-        correct: 'c',
-      },
-    ],
-  },
-  {
-    id: 'service',
-    title: 'Customer service 101',
-    description: 'How to deliver exceptional guest experiences every time.',
-    emoji: '😊',
-    content: `**The guest experience starts with you**
-
-Every interaction with a guest shapes how they feel about your restaurant. Great service turns first-time visitors into loyal regulars.
-
-**Core principles**
-
-1. **Greet promptly** — Acknowledge guests within 30 seconds of arrival, even if you're busy. A simple "Welcome, I'll be right with you!" goes a long way.
-
-2. **Listen actively** — Give guests your full attention when they're speaking. Repeat back their order to confirm accuracy.
-
-3. **Know your menu** — Be prepared to explain every dish, including allergens and preparation methods. If you don't know, find out — don't guess.
-
-4. **Handle complaints with HEAT**
-   - **H**ear them out (let them finish)
-   - **E**mpathize ("I completely understand")
-   - **A**pologize sincerely
-   - **T**ake action immediately
-
-5. **The farewell matters** — Thank guests by name if you know it. Invite them to return. A warm goodbye is as important as the welcome.`,
-    quiz: [
-      {
-        id: 'q1',
-        body: 'How quickly should you acknowledge a guest who has arrived?',
-        choices: [
-          { id: 'a', body: 'Within 30 seconds' },
-          { id: 'b', body: 'Within 2 minutes' },
-          { id: 'c', body: 'When you finish your current task' },
-          { id: 'd', body: 'After they sit down' },
-        ],
-        correct: 'a',
-      },
-      {
-        id: 'q2',
-        body: 'What should you do if a guest asks about a dish you are unsure about?',
-        choices: [
-          { id: 'a', body: 'Make your best guess' },
-          { id: 'b', body: "Tell them it's delicious" },
-          { id: 'c', body: 'Find out the correct information' },
-          { id: 'd', body: 'Recommend a different dish' },
-        ],
-        correct: 'c',
-      },
-      {
-        id: 'q3',
-        body: 'What does the "A" in HEAT stand for when handling complaints?',
-        choices: [
-          { id: 'a', body: 'Ask questions' },
-          { id: 'b', body: 'Apologize sincerely' },
-          { id: 'c', body: 'Avoid escalation' },
-          { id: 'd', body: 'Act quickly' },
-        ],
-        correct: 'b',
-      },
-    ],
-  },
-]
 
 export function DemoPage() {
   const navigate = useNavigate()
   const t = useLpT()
+  const { lang } = useLanguageStore()
+  const DEMO_COURSES = getDemoCourses(lang)
   const [view, setView] = useState<View>('home')
   const [activeCourseId, setActiveCourseId] = useState<string | null>(null)
   const [answers, setAnswers] = useState<Record<string, string>>({})

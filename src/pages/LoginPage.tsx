@@ -2,11 +2,13 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuthStore } from '../stores/authStore'
+import { useLanguageStore } from '../stores/languageStore'
 import { showToast } from '../components/ui/Toast'
 import { Button } from '../components/ui/Button'
 import { Input } from '../components/ui/Input'
 import { LanguageSelector } from '../components/ui/LanguageSelector'
 import { useT } from '../hooks/useT'
+import { getLegalContent, REPORT_FORM_URL } from '../lib/legalContent'
 import type { Employee } from '../types'
 
 type Mode = 'admin-login' | 'admin-signup' | 'employee'
@@ -17,6 +19,8 @@ export function LoginPage() {
   const [mode, setMode] = useState<Mode>('admin-login')
   const navigate = useNavigate()
   const { setAdmin, setEmployee, setTenantId } = useAuthStore()
+  const { lang } = useLanguageStore()
+  const lc = getLegalContent(lang)
   const t = useT()
 
   // Admin login state
@@ -258,9 +262,11 @@ export function LoginPage() {
         </div>
 
         <p className="text-center text-xs text-gray-400 mt-6">
-          <a href="/terms" className="underline hover:text-gray-600">利用規約</a>
+          <a href="/terms" className="underline hover:text-gray-600">{lc.termsLink}</a>
           　・
-          <a href="/privacy" className="underline hover:text-gray-600">プライバシーポリシー</a>
+          <a href="/privacy" className="underline hover:text-gray-600">{lc.privacyLink}</a>
+          　・
+          <a href={REPORT_FORM_URL} target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-600">{lc.reportLink}</a>
         </p>
       </div>
     </div>

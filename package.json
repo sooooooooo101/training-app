@@ -5,7 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+<<<<<<< HEAD
     "build": "tsc -b && vite build",
+=======
+    "build": "tsc -b && vite build && cp dist/index.html dist/404.html",
+>>>>>>> e7b12ca (Add .env.production for Cloudflare Pages build)
     "lint": "eslint .",
     "preview": "vite preview"
   },

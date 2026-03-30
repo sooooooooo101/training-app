@@ -29,7 +29,7 @@ export type LegalContent = {
 
 /** デフォルトの通報・問い合わせフォーム（`VITE_REPORT_FORM_URL` 未設定時） */
 const DEFAULT_REPORT_FORM_URL =
-  'https://docs.google.com/forms/d/e/1FAIpQLSeEgkJL8Q7CrxaGkYWAy6YKo659ozKcmBYX-Qvl0TIzbeOUEA/viewform?usp=publish-editor'
+  'https://docs.google.com/forms/d/e/1FAIpQLSeEgkJL8Q7CrxaGkYWAy6YKo659ozKcmBYX-Qvl0TIzbeOUEA/viewform?usp=dialog'
 
 export function getReportFormUrl(): string {
   const v = import.meta.env.VITE_REPORT_FORM_URL

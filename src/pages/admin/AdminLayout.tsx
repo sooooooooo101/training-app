@@ -3,6 +3,7 @@ import { supabase } from '../../lib/supabase'
 import { useAuthStore } from '../../stores/authStore'
 import { showToast } from '../../components/ui/Toast'
 import { LanguageSelector } from '../../components/ui/LanguageSelector'
+import { LegalFooter } from '../../components/LegalFooter'
 import { useT } from '../../hooks/useT'
 
 export function AdminLayout() {
@@ -24,7 +25,7 @@ export function AdminLayout() {
   ]
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <header className="bg-card border-b border-border">
         {/* 上段: アプリ名 + ユーザー情報 */}
         <div className="px-4 py-2 flex items-center justify-between">
@@ -58,9 +59,12 @@ export function AdminLayout() {
           <span className="text-sm text-gray-500 ml-auto pl-2 whitespace-nowrap sm:hidden">{admin?.name}</span>
         </div>
       </header>
-      <main className="p-4 sm:p-6">
+      <main className="p-4 sm:p-6 flex-1">
         <Outlet />
       </main>
+      <footer className="px-4 sm:px-6 pb-8 pt-4 border-t border-border mt-auto">
+        <LegalFooter />
+      </footer>
     </div>
   )
 }

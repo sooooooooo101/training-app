@@ -7,6 +7,7 @@ import { Card } from '../../components/ui/Card'
 import { Badge } from '../../components/ui/Badge'
 import { Button } from '../../components/ui/Button'
 import { LanguageSelector } from '../../components/ui/LanguageSelector'
+import { LegalFooter } from '../../components/LegalFooter'
 import { useT } from '../../hooks/useT'
 import type { Course, Progress } from '../../types'
 
@@ -123,6 +124,10 @@ export function EmployeeHome() {
           </div>
         )}
       </main>
+
+      <footer className="px-4 pb-8 max-w-2xl mx-auto w-full">
+        <LegalFooter className="mt-4 pt-6 border-t border-border" />
+      </footer>
     </div>
   )
 }

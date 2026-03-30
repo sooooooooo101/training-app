@@ -21,17 +21,27 @@ export type LegalContent = {
   privacy: LegalDoc
   back: string
   downloadPdf: string
+  downloadPdfError: string
   termsLink: string
   privacyLink: string
   reportLink: string
 }
 
-export const REPORT_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeEgkJL8Q7CrxaGkYWAy6YKo659ozKcmBYX-Qvl0TIzbeOUEA/viewform?usp=publish-editor'
+/** デフォルトの通報・問い合わせフォーム（`VITE_REPORT_FORM_URL` 未設定時） */
+const DEFAULT_REPORT_FORM_URL =
+  'https://docs.google.com/forms/d/e/1FAIpQLSeEgkJL8Q7CrxaGkYWAy6YKo659ozKcmBYX-Qvl0TIzbeOUEA/viewform?usp=publish-editor'
+
+export function getReportFormUrl(): string {
+  const v = import.meta.env.VITE_REPORT_FORM_URL
+  if (typeof v === 'string' && v.trim() !== '') return v.trim()
+  return DEFAULT_REPORT_FORM_URL
+}
 
 const content: Record<LangCode, LegalContent> = {
   ja: {
     back: '← 戻る',
     downloadPdf: 'PDFをダウンロード',
+    downloadPdfError: 'PDFの作成に失敗しました',
     termsLink: '利用規約',
     privacyLink: 'プライバシーポリシー',
     reportLink: '通報・お問い合わせ',
@@ -131,6 +141,7 @@ const content: Record<LangCode, LegalContent> = {
   en: {
     back: '← Back',
     downloadPdf: 'Download PDF',
+    downloadPdfError: 'Could not create PDF',
     termsLink: 'Terms of Service',
     privacyLink: 'Privacy Policy',
     reportLink: 'Report / Contact',
@@ -230,6 +241,7 @@ const content: Record<LangCode, LegalContent> = {
   vi: {
     back: '← Quay lại',
     downloadPdf: 'Tải xuống PDF',
+    downloadPdfError: 'Không thể tạo PDF',
     termsLink: 'Điều khoản dịch vụ',
     privacyLink: 'Chính sách bảo mật',
     reportLink: 'Báo cáo / Liên hệ',
@@ -292,6 +304,7 @@ const content: Record<LangCode, LegalContent> = {
   zh: {
     back: '← 返回',
     downloadPdf: '下载PDF',
+    downloadPdfError: '无法生成PDF',
     termsLink: '服务条款',
     privacyLink: '隐私政策',
     reportLink: '举报 / 联系我们',
@@ -323,9 +336,10 @@ const content: Record<LangCode, LegalContent> = {
     },
   },
 
-  fil: {
+  tl: {
     back: '← Bumalik',
     downloadPdf: 'I-download ang PDF',
+    downloadPdfError: 'Hindi makagawa ng PDF',
     termsLink: 'Mga Tuntunin ng Serbisyo',
     privacyLink: 'Patakaran sa Privacy',
     reportLink: 'Mag-ulat / Makipag-ugnayan',
@@ -360,6 +374,7 @@ const content: Record<LangCode, LegalContent> = {
   pt: {
     back: '← Voltar',
     downloadPdf: 'Baixar PDF',
+    downloadPdfError: 'Não foi possível criar o PDF',
     termsLink: 'Termos de Serviço',
     privacyLink: 'Política de Privacidade',
     reportLink: 'Denunciar / Contato',
@@ -394,6 +409,7 @@ const content: Record<LangCode, LegalContent> = {
   ko: {
     back: '← 돌아가기',
     downloadPdf: 'PDF 다운로드',
+    downloadPdfError: 'PDF를 만들 수 없습니다',
     termsLink: '이용약관',
     privacyLink: '개인정보처리방침',
     reportLink: '신고 / 문의',
@@ -428,6 +444,7 @@ const content: Record<LangCode, LegalContent> = {
   id: {
     back: '← Kembali',
     downloadPdf: 'Unduh PDF',
+    downloadPdfError: 'Gagal membuat PDF',
     termsLink: 'Syarat Layanan',
     privacyLink: 'Kebijakan Privasi',
     reportLink: 'Laporan / Hubungi Kami',
@@ -462,6 +479,7 @@ const content: Record<LangCode, LegalContent> = {
   th: {
     back: '← กลับ',
     downloadPdf: 'ดาวน์โหลด PDF',
+    downloadPdfError: 'สร้าง PDF ไม่สำเร็จ',
     termsLink: 'ข้อกำหนดการให้บริการ',
     privacyLink: 'นโยบายความเป็นส่วนตัว',
     reportLink: 'รายงาน / ติดต่อเรา',
@@ -496,6 +514,7 @@ const content: Record<LangCode, LegalContent> = {
   ne: {
     back: '← फिर्ता',
     downloadPdf: 'PDF डाउनलोड गर्नुहोस्',
+    downloadPdfError: 'PDF बनाउन सकिएन',
     termsLink: 'सेवाका सर्तहरू',
     privacyLink: 'गोपनीयता नीति',
     reportLink: 'रिपोर्ट / सम्पर्क',
@@ -530,6 +549,7 @@ const content: Record<LangCode, LegalContent> = {
   my: {
     back: '← နောက်သို့',
     downloadPdf: 'PDF ဒေါင်းလုဒ်',
+    downloadPdfError: 'PDF ဖန်တီး၍မရပါ',
     termsLink: 'ဝန်ဆောင်မှု သဘောတူညီချက်',
     privacyLink: 'ကိုယ်ရေးကိုယ်တာ မူဝါဒ',
     reportLink: 'တိုင်ကြားရန် / ဆက်သွယ်ရန်',
